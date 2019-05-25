@@ -2,8 +2,8 @@ package com.example.hebam.notekeeper;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+//import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class NoteActivity extends AppCompatActivity {
     private final String TAG = getClass().getSimpleName();

@@ -9,7 +9,7 @@ import androidx.test.core.app.ApplicationProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import androidx.test.InstrumentationRegistry;
+//import androidx.test.InstrumentationRegistry;
 
 import static org.junit.Assert.*;
 
