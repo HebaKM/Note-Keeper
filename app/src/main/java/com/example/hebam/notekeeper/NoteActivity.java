@@ -44,10 +44,6 @@ public class NoteActivity extends AppCompatActivity {
     private String mOriginalNoteTitle;
     private String mOriginalNoteText;
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,6 +127,7 @@ public class NoteActivity extends AppCompatActivity {
         mNote.setTitle(mTextNoteTitle.getText().toString());
         mNote.setText(mTextNoteText.getText().toString());
     }
+
     private void displayNote(Spinner spinnerCourses, EditText textNoteTitle, EditText textNoteText) {
         List<CourseInfo> courses = DataManager.getInstance().getCourses();
         int courseIndex = courses.indexOf(mNote.getCourse());
@@ -180,9 +177,39 @@ public class NoteActivity extends AppCompatActivity {
         }else if (id == R.id.action_cancel){
             mIsCancelling = true;
             finish();//closes the activity
+        }else if (id == R.id.action_next){
+            moveNext();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * This method is called when the menu is initially displayed
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        //Returns a reference to the item with id action_next
+        MenuItem item = menu.findItem(R.id.action_next);
+        //Stores the index of the last item in the Note list
+        int lastNoteIndex = DataManager.getInstance().getNotes().size() - 1;
+        item.setEnabled(mNotePosition < lastNoteIndex);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void moveNext() {
+        saveNote();
+
+        ++mNotePosition;
+        mNote = DataManager.getInstance().getNotes().get(mNotePosition);
+
+        saveOriginalNoteValues();
+        displayNote(mSpinnerCourses, mTextNoteTitle, mTextNoteText);
+        // By calling this method each time the user clicks the next menu item the system will call
+        // the onPrepareOptionsMenu.
+        invalidateOptionsMenu();
     }
 
     private void sendEmail() {
