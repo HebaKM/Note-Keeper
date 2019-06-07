@@ -14,4 +14,5 @@
     <string name="note_text_hint">Note Text</string>
     <string name="nav_share_message">Don\'t you think you\'ve shared enough</string>
     <string name="nav_send_message">Send</string>
+    <string name="Course_Image">Course Image</string>
 </resources>
