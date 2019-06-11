@@ -1,0 +1,20 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <Preference
+        app:key="general"
+        app:fragment="com.example.hebam.notekeeper.SettingsActivity$GeneralPreferenceFragment"
+        app:icon="@drawable/ic_info_black_24dp"
+        app:title="@string/pref_header_general" />
+
+    <Preference
+        app:key="data_sync"
+        app:fragment="com.example.hebam.notekeeper.SettingsActivity$DataSyncPreferenceFragment"
+        app:icon="@drawable/ic_sync_black_24dp"
+        app:title="@string/pref_header_data_sync" />
+
+</PreferenceScreen>
