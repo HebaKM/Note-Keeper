@@ -67,7 +67,7 @@ public class NoteListActivity extends AppCompatActivity {
 ////                intent.putExtra(NoteActivity.NOTE_INFO, note);
 //
 //                //Method#2
-//                intent.putExtra(NoteActivity.NOTE_POSITION, position);
+//                intent.putExtra(NoteActivity.NOTE_ID, position);
 //                startActivity(intent);
 //            }
 //        });

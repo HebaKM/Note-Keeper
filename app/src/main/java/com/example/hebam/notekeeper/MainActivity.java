@@ -2,6 +2,7 @@ package com.example.hebam.notekeeper;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,12 +37,18 @@ public class MainActivity extends AppCompatActivity
     private CourseRecyclerAdapter mCourseRecyclerAdapter;
     private GridLayoutManager mCoursesLayoutManager;
 
+    private NoteKeeperOpenHelper mDbOpenHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //it is ok to create the instance of this class in the onCreate method but do not interact
+        //with the database in here since it is not cheap
+        mDbOpenHelper = new NoteKeeperOpenHelper(this);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +75,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onDestroy() {
+        mDbOpenHelper.close();
+        super.onDestroy();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 //        mAdapterNotes.notifyDataSetChanged();
@@ -81,6 +94,10 @@ public class MainActivity extends AppCompatActivity
         TextView textUserName = headerView.findViewById(R.id.text_user_name);
         TextView textEmailAddress = headerView.findViewById(R.id.text_email_address);
 
+        //getDefaultSharedPreferences: Gets a SharedPreferences instance that points to the default
+        // file that is used by the preference framework in the given context!
+        //getSharedPreferences: Gets a specific SharedPreferences instance by name in case you have
+        // more than one preference in the same context!
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         String userName = pref.getString("user_display_name","");
         String emailAddress = pref.getString("user_email_address","");
@@ -109,12 +126,13 @@ public class MainActivity extends AppCompatActivity
 ////                intent.putExtra(NoteActivity.NOTE_INFO, note);
 //
 //                //Method#2
-//                intent.putExtra(NoteActivity.NOTE_POSITION, position);
+//                intent.putExtra(NoteActivity.NOTE_ID, position);
 //                startActivity(intent);
 //            }
 //        });
 //
         //Method#2 using RecyclerView
+        DataManager.loadFromDatabase(mDbOpenHelper);
         mRecyclerItems = findViewById(R.id.list_items);
         mNotesLayoutManager = new LinearLayoutManager(this);
         //Layout to display courses in two col
@@ -134,6 +152,10 @@ public class MainActivity extends AppCompatActivity
         mRecyclerItems.setLayoutManager(mNotesLayoutManager);
         mRecyclerItems.setAdapter(mNoteRecyclerAdapter);
 
+        //Insert default values in the tables
+//        DatabaseDataWorker worker = new DatabaseDataWorker(db);
+//        worker.insertCourses();
+//        worker.insertSampleNotes();
         //We need to check the notes menu item  manually here since
         //at startup there is no user action to cause the system to
         //automatically set it

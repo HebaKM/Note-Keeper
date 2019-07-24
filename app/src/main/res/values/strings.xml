@@ -101,7 +101,6 @@
         <item>http://facebook.com</item>
         <item>http://twitter.com</item>
     </string-array>
-    <string name="pref_default_favorite_social">http://google.com</string>
-
+    <string name="pref_default_favorite_social" translatable="false">http://google.com</string>
 
 </resources>

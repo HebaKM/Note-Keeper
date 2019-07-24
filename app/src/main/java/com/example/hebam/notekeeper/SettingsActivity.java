@@ -90,6 +90,8 @@ public class SettingsActivity extends AppCompatActivity implements
 
         setContentView(R.layout.activity_settings);
 
+        setupActionBar();
+
         // Because the fragment has been added to the FrameLayout
         // container at runtime—instead of defining it in the
         // activity's layout with a <fragment> element—the activity
@@ -100,6 +102,18 @@ public class SettingsActivity extends AppCompatActivity implements
                 .beginTransaction()
                 .add(R.id.pre, new MySettingsFragment())
                 .commit();
+
+    }
+
+    /**
+     * Set up the {@link android.app.ActionBar}, if the API is available.
+     */
+    private void setupActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            // Show the Up button in the action bar.
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
 
